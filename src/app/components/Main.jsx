@@ -38,7 +38,7 @@ export function Main(props) {
         className="relative h-screen overflow-scroll"
       >
         <div
-          className={`absolute bg-black ${
+          className={`absolute z-[50] bg-black ${
             panelOpen ? "opacity-50 w-full h-full" : "opacity-0 w-0 h-0"
           } transition-opacity duration-300`}
         />

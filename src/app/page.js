@@ -19,19 +19,37 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   var rail = new Rail(process.env.OPEN_LDBWS_TOKEN);
 
+  async function getServiceDetail(serviceId) {
+    return await new Promise((resolve, reject) => {
+      rail.getServiceDetails(serviceId, function (err, result) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result.serviceDetails.previousCallingPoints);
+        }
+      });
+    });
+  }
+
   const result = await new Promise((resolve, reject) => {
-    rail.getDepartureBoardWithDetails("SRU", {}, function (err, result) {
+    rail.getDepartureBoardWithDetails("SRU", {}, async function (err, result) {
       if (err) {
         reject(err);
       } else {
-        const modifiedResult = result.trainServices.map((train) => ({
-          ...train,
-          departingStation: {
-            name: "South Ruislip",
-            crs: "SRU",
-            time: train.std,
-          },
-        }));
+        const modifiedResultPromises = result.trainServices.map(
+          async (train) => ({
+            ...train,
+            departingStation: {
+              name: "South Ruislip",
+              crs: "SRU",
+              time: train.std,
+            },
+            previousCallingPoints: await getServiceDetail(train.serviceId),
+          })
+        );
+
+        const modifiedResult = await Promise.all(modifiedResultPromises);
+
         resolve(modifiedResult);
       }
     });

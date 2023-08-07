@@ -15,6 +15,14 @@ export default function Detail(props) {
 
   return (
     <Steps current={1} direction="vertical">
+      {props.data.previousCallingPoints.map((stop, index) => (
+        <Step
+          key={index}
+          title={stop.locationName}
+          description={stop.st}
+          status="process"
+        />
+      ))}
       <Step
         title={props.data.departingStation.name}
         description={props.data.departingStation.time}
