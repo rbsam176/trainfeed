@@ -31,7 +31,31 @@ export default async function Home() {
     });
   }
 
-  const result = await new Promise((resolve, reject) => {
+  //   const result = await new Promise((resolve, reject) => {
+  //     rail.getDepartureBoardWithDetails("SRU", {}, async function (err, result) {
+  //       if (err) {
+  //         reject(err);
+  //       } else {
+  //         const modifiedResultPromises = result.trainServices.map(
+  //           async (train) => ({
+  //             ...train,
+  //             departingStation: {
+  //               name: "South Ruislip",
+  //               crs: "SRU",
+  //               time: train.std,
+  //             },
+  //             previousCallingPoints: await getServiceDetail(train.serviceId),
+  //           })
+  //         );
+
+  //         const modifiedResult = await Promise.all(modifiedResultPromises);
+
+  //         resolve(modifiedResult);
+  //       }
+  //     });
+  //   });
+
+  const southRuislip = await new Promise((resolve, reject) => {
     rail.getDepartureBoardWithDetails("SRU", {}, async function (err, result) {
       if (err) {
         reject(err);
@@ -55,11 +79,37 @@ export default async function Home() {
     });
   });
 
+  const westRuislip = await new Promise((resolve, reject) => {
+    rail.getDepartureBoardWithDetails("WRU", {}, async function (err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        const modifiedResultPromises = result.trainServices.map(
+          async (train) => ({
+            ...train,
+            departingStation: {
+              name: "West Ruislip",
+              crs: "WRU",
+              time: train.std,
+            },
+            previousCallingPoints: await getServiceDetail(train.serviceId),
+          })
+        );
+
+        const modifiedResult = await Promise.all(modifiedResultPromises);
+
+        resolve(modifiedResult);
+      }
+    });
+  });
+
+  const allTrains = [...southRuislip, ...westRuislip];
+
   const nextTrain = sortByTime(
-    result.filter((service) =>
+    allTrains.filter((service) =>
       service.subsequentCallingPoints.some((stop) => stop.crs === "BCF")
     )
   )[0];
 
-  return <Main data={result} nextTrain={nextTrain} />;
+  return <Main data={allTrains} nextTrain={nextTrain} />;
 }

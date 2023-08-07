@@ -57,7 +57,9 @@ export default function DepartureCard(props) {
           </Link>
         </div>
         <div className="leading-5 my-3">
-          <div className="text-[24px] font-bold">South Ruislip</div>
+          <div className="text-[24px] font-bold">
+            {item.departingStation.name}
+          </div>
           <small>
             {item.std} - Platform {item.platform}
           </small>
