@@ -35,7 +35,7 @@ export function Main(props) {
         onClick={() => {
           panelOpen && parentRef?.current?.setHeight(0);
         }}
-        className="relative"
+        className="relative h-screen overflow-scroll"
       >
         <div
           className={`absolute bg-black ${
@@ -44,7 +44,7 @@ export function Main(props) {
         />
 
         <div className="h-[15vh] bg-white text-white bg-[url('/cloud-bg.svg')] bg-no-repeat bg-bottom	bg-cover"></div>
-        <div className="bg-[#48A7E9] h-[10vh] text-white px-6 leading-8">
+        <div className="bg-[#48A7E9] min-h-[10vh] text-white px-6 leading-8">
           <p className="text-[24px]">The next train is...</p>
           <p className="flex items-center">
             <span className="text-[34px]">
@@ -54,7 +54,7 @@ export function Main(props) {
           </p>
         </div>
 
-        <div className="p-6 bg-[#48A7E9] min-h-[75vh]">
+        <div className="p-6 bg-[#48A7E9] min-h-[75vh] ">
           <DepartureCard
             rail={props.data}
             panelOpen={panelOpen}
