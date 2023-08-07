@@ -24,7 +24,7 @@ export default function DepartureCard(props) {
         props.setPanelOpen(!props.panelOpen);
         props.setActiveTrain(item);
       }}
-      className={`bg-white rounded-lg p-6 relative mb-3 border-4 ${
+      className={`bg-white rounded-lg p-6 last:mb-[100px] relative mb-3 border-4 ${
         index === 0 ? "border-[#EBD494]" : "border-white"
       }`}
     >

@@ -73,7 +73,7 @@ export function Main(props) {
               </p>
             </div>
 
-            <div className="p-6 bg-[#48A7E9] min-h-[85vh]">
+            <div className="p-6 bg-[#48A7E9] min-h-[75vh]">
               <DepartureCard
                 trainData={trainData}
                 panelOpen={panelOpen}
