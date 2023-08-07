@@ -26,7 +26,7 @@ export function Main(props) {
     : parentRef?.current?.setHeight(0);
 
   useEffect(() => {
-    setAnchors([0, window.innerHeight * 0.8]);
+    setAnchors([0, window.innerHeight * 0.8], window.innerHeight);
     onHeightChange(0);
   }, []);
 
@@ -72,7 +72,7 @@ export function Main(props) {
                 }}
                 className="flex items-center"
               >
-                <span className="text-[34px]">
+                <span className="text-[32px]">
                   {nextTrain.departingStation.name}: {nextTrain.std}
                 </span>
                 <img src="/chevron-right.svg" className="inline ml-2" />
