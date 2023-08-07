@@ -54,7 +54,7 @@ export default function DepartureCard(props) {
           <div className="text-[24px] font-bold">
             {item.departingStation.name}
           </div>
-          <small>
+          <small className="text-[12px]">
             {item.std} - Platform {item.platform}
           </small>
           <div className="my-2 flex items-center">

@@ -65,12 +65,18 @@ export function Main(props) {
             <div className="h-[15vh] bg-white text-white bg-[url('/cloud-bg.svg')] bg-no-repeat bg-bottom	bg-cover"></div>
             <div className="bg-[#48A7E9] min-h-[10vh] text-white px-6 leading-8">
               <p className="text-[24px]">The next train is...</p>
-              <p className="flex items-center">
+              <button
+                onClick={() => {
+                  setPanelOpen(!props.panelOpen);
+                  setActiveTrain(nextTrain);
+                }}
+                className="flex items-center"
+              >
                 <span className="text-[34px]">
                   {nextTrain.departingStation.name}: {nextTrain.std}
                 </span>
                 <img src="/chevron-right.svg" className="inline ml-2" />
-              </p>
+              </button>
             </div>
 
             <div className="p-6 bg-[#48A7E9] min-h-[75vh]">
