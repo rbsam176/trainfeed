@@ -20,7 +20,7 @@ export default function Home() {
           >
             By{" "}
             <Image
-              src="/vercel.svg"
+              src="/nextjs-github-pages/vercel.svg"
               alt="Vercel Logo"
               className="dark:invert"
               width={100}
