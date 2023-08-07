@@ -53,10 +53,7 @@ export default function DepartureCard(props) {
             target="_blank"
             href={`https://ojp.nationalrail.co.uk/service/ldbdetails/${item.serviceId}`}
           >
-            <img
-              src="/nextjs-github-pages/nationalraillogo.png"
-              className="w-[25px] h-[25px]"
-            />
+            <img src="/nationalraillogo.png" className="w-[25px] h-[25px]" />
           </Link>
         </div>
         <div className="leading-5 my-3">

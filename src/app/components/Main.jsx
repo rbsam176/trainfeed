@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { FloatingPanel, Steps } from "antd-mobile";
+import { FloatingPanel } from "antd-mobile";
 import { AiFillCloseCircle } from "react-icons/ai";
 import DepartureCard from "./DepartureCard";
 import Detail from "./Detail";
@@ -43,17 +43,14 @@ export function Main(props) {
           } transition-opacity duration-300`}
         />
 
-        <div className="h-[15vh] bg-white text-white bg-[url('/nextjs-github-pages/cloud-bg.svg')] bg-no-repeat bg-bottom	bg-cover"></div>
+        <div className="h-[15vh] bg-white text-white bg-[url('/cloud-bg.svg')] bg-no-repeat bg-bottom	bg-cover"></div>
         <div className="bg-[#48A7E9] h-[10vh] text-white px-6 leading-8">
           <p className="text-[24px]">The next train is...</p>
           <p className="flex items-center">
             <span className="text-[34px]">
               South Ruislip: {props.nextTrain.std}
             </span>
-            <img
-              src="/nextjs-github-pages/chevron-right.svg"
-              className="inline ml-2"
-            />
+            <img src="/chevron-right.svg" className="inline ml-2" />
           </p>
         </div>
 
