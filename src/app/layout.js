@@ -13,6 +13,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-startup-image" href="/launchscreen.jpg"></link>
         <link rel="apple-touch-icon" href="/icon-512x512.png"></link>
         <link
           rel="apple-touch-icon"
