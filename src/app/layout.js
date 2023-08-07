@@ -13,7 +13,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-startup-image" href="/launchscreen.jpg"></link>
+        <link
+          rel="apple-touch-startup-image"
+          media="(device-width: 828px) and (device-height: 1792px) and (-webkit-device-pixel-ratio: 3)"
+          href="/launchimage.png"
+        ></link>
         <link rel="apple-touch-icon" href="/icon-512x512.png"></link>
         <link
           rel="apple-touch-icon"
