@@ -1,17 +1,24 @@
 "use client";
 import { Steps } from "antd-mobile";
 
-function getCurrentTime() {
-  const now = new Date();
-  const hours = now.getHours().toString().padStart(2, "0");
-  const minutes = now.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
+function hasTimePassed(targetTime) {
+  const currentTime = new Date();
+  const [targetHours, targetMinutes] = targetTime.split(":").map(Number);
+  const currentHours = currentTime.getHours();
+  const currentMinutes = currentTime.getMinutes();
+
+  if (currentHours > targetHours) {
+    return true;
+  } else if (currentHours === targetHours && currentMinutes >= targetMinutes) {
+    return true;
+  }
+
+  return false;
 }
 
 export default function Detail(props) {
   const { Step } = Steps;
   if (!props.data) return false;
-  const currentTime = getCurrentTime();
 
   return (
     <Steps current={1} direction="vertical">
@@ -20,14 +27,14 @@ export default function Detail(props) {
           key={index}
           title={stop.locationName}
           description={stop.st}
-          status="process"
+          status={hasTimePassed(stop.st) ? "process" : "wait"}
         />
       ))}
       <Step
         title={props.data.departingStation.name}
         description={props.data.departingStation.time}
         status={
-          currentTime >= props.data.departingStation.time ? "process" : "wait"
+          hasTimePassed(props.data.departingStation.time) ? "process" : "wait"
         }
       />
       {props.data.subsequentCallingPoints.map((stop, index) => (
@@ -35,7 +42,7 @@ export default function Detail(props) {
           key={index}
           title={stop.locationName}
           description={stop.st}
-          status={currentTime >= stop.st ? "process" : "wait"}
+          status={hasTimePassed(stop.st) ? "process" : "wait"}
         />
       ))}
     </Steps>

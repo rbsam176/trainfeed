@@ -31,30 +31,6 @@ export default async function Home() {
     });
   }
 
-  //   const result = await new Promise((resolve, reject) => {
-  //     rail.getDepartureBoardWithDetails("SRU", {}, async function (err, result) {
-  //       if (err) {
-  //         reject(err);
-  //       } else {
-  //         const modifiedResultPromises = result.trainServices.map(
-  //           async (train) => ({
-  //             ...train,
-  //             departingStation: {
-  //               name: "South Ruislip",
-  //               crs: "SRU",
-  //               time: train.std,
-  //             },
-  //             previousCallingPoints: await getServiceDetail(train.serviceId),
-  //           })
-  //         );
-
-  //         const modifiedResult = await Promise.all(modifiedResultPromises);
-
-  //         resolve(modifiedResult);
-  //       }
-  //     });
-  //   });
-
   const southRuislip = await new Promise((resolve, reject) => {
     rail.getDepartureBoardWithDetails("SRU", {}, async function (err, result) {
       if (err) {
@@ -103,13 +79,50 @@ export default async function Home() {
     });
   });
 
-  const allTrains = [...southRuislip, ...westRuislip];
+  const beaconsfield = await new Promise((resolve, reject) => {
+    rail.getDepartureBoardWithDetails("BCF", {}, async function (err, result) {
+      if (err) {
+        reject(err);
+      } else {
+        const modifiedResultPromises = result.trainServices.map(
+          async (train) => ({
+            ...train,
+            departingStation: {
+              name: "Beaconsfield",
+              crs: "BCF",
+              time: train.std,
+            },
+            previousCallingPoints: await getServiceDetail(train.serviceId),
+          })
+        );
 
-  const nextTrain = sortByTime(
-    allTrains.filter((service) =>
+        const modifiedResult = await Promise.all(modifiedResultPromises);
+
+        resolve(modifiedResult);
+      }
+    });
+  });
+
+  const allOutwardTrains = [...southRuislip, ...westRuislip];
+
+  const nextOutwardTrain = sortByTime(
+    allOutwardTrains.filter((service) =>
       service.subsequentCallingPoints.some((stop) => stop.crs === "BCF")
     )
   )[0];
 
-  return <Main data={allTrains} nextTrain={nextTrain} />;
+  const nextReturningTrain = sortByTime(
+    beaconsfield.filter((service) =>
+      service.subsequentCallingPoints.some((stop) => stop.crs === "SRU")
+    )
+  )[0];
+
+  return (
+    <Main
+      outwardTrains={allOutwardTrains}
+      returningTrains={beaconsfield}
+      nextOutwardTrain={nextOutwardTrain}
+      nextReturningTrain={nextReturningTrain}
+    />
+  );
 }
